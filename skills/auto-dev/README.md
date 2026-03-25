@@ -1,4 +1,4 @@
-# Software Development Skill
+# Auto-Dev Skill
 
 ## Mission
 
@@ -79,7 +79,7 @@ Experience is dated and treated as hints, not guarantees. If a pattern leads to 
 ## Quick Reference
 
 ```
-skills/software_development/
+skills/auto-dev/
 ├── SKILL.md                   # Entry point — start here
 ├── phases/                    # 11 reusable workflow steps + _template.md
 ├── paradigms/                 # 4 task-type workflows + parallel-execution

@@ -26,8 +26,8 @@
     "bugfix": "bugfix/hypothesis-driven",
     "addition": "addition/lightweight"
   },
-  "phases_directory": "skills/software_development/phases",
-  "paradigms_directory": "skills/software_development/paradigms",
+  "phases_directory": "skills/auto-dev/phases",
+  "paradigms_directory": "skills/auto-dev/paradigms",
   "environment": {
     "provider": "docker",
     "default_image": "node:20-bookworm",

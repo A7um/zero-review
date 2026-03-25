@@ -1,12 +1,12 @@
 ---
-name: software-development
+name: auto-dev
 version: 4.0
 description: Composable development workflow system. Phases define reusable steps; paradigms compose them into ordered sequences. Four paradigms cover greenfield, enhancement, bugfix, and addition task types.
 author: system
 requires: []
 ---
 
-# Software Development Skill
+# Auto-Dev Skill
 
 > **WHEN TO USE:** Task requires building, modifying, or fixing software, tools, or systems and requirements are clear (confidence: MEDIUM or HIGH).
 

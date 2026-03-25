@@ -1,4 +1,4 @@
-# Contributing to Software Development Skill
+# Contributing to Auto-Dev Skill
 
 ## How to Add a New Paradigm
 

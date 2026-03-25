@@ -3,7 +3,7 @@ description: "Fix a bug — hypothesis-driven diagnosis and minimal surgical fix
 argument-hint: <bug description or reproduction steps>
 ---
 
-# Software Development — Bugfix (Hypothesis-Driven)
+# Auto-Dev — Bugfix (Hypothesis-Driven)
 
 You are executing the **hypothesis-driven** paradigm for fixing bugs.
 

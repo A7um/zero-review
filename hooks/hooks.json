@@ -7,7 +7,7 @@
           {
             "type": "command",
             "command": "${CLAUDE_PLUGIN_ROOT}/scripts/inject-dev-skill.sh",
-            "statusMessage": "Injecting software development context..."
+            "statusMessage": "Injecting auto-dev skill context..."
           }
         ]
       }

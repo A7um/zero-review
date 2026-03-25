@@ -3,9 +3,9 @@ description: "Composable development workflow — auto-classifies task type and 
 argument-hint: <task description>
 ---
 
-# Software Development — Auto-Classify
+# Auto-Dev — Auto-Classify
 
-You are executing the **software development skill**. Your job is to classify the task and follow the correct paradigm workflow.
+You are executing the **auto-dev skill**. Your job is to classify the task and follow the correct paradigm workflow.
 
 ## User Request
 

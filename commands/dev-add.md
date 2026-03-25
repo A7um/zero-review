@@ -3,7 +3,7 @@ description: "Add a single component — lightweight workflow for well-scoped ad
 argument-hint: <what to add>
 ---
 
-# Software Development — Addition (Lightweight)
+# Auto-Dev — Addition (Lightweight)
 
 You are executing the **lightweight** paradigm for single, well-scoped additions.
 

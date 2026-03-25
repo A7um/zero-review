@@ -1,5 +1,5 @@
 #!/bin/bash
-# Hook: SubagentStart — inject software development skill context
+# Hook: SubagentStart — inject auto-dev skill context
 # Triggered for: Bash, general-purpose, Plan subagents
 set -euo pipefail
 

@@ -3,7 +3,7 @@ description: "Enhance existing code — impact-analysis-driven workflow"
 argument-hint: <what to enhance>
 ---
 
-# Software Development — Enhancement (Delta Design)
+# Auto-Dev — Enhancement (Delta Design)
 
 You are executing the **delta-design** paradigm for enhancing existing code.
 

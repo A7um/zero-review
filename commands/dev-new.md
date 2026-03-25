@@ -3,7 +3,7 @@ description: "Greenfield development — full architecture design before impleme
 argument-hint: <what to build>
 ---
 
-# Software Development — Greenfield (Architecture-First)
+# Auto-Dev — Greenfield (Architecture-First)
 
 You are executing the **architecture-first** paradigm for greenfield development.
 
