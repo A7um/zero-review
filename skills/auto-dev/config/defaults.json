@@ -1,0 +1,39 @@
+{
+  "output_root": ".dev-output",
+  "designs_directory": "{output_root}/designs",
+  "implementations_directory": "{output_root}/implementations",
+  "complexity_levels": ["S", "M", "L", "XL"],
+  "required_architecture_sections": [
+    "component_breakdown",
+    "data_flow",
+    "technology_choices",
+    "complexity_estimate",
+    "test_strategy"
+  ],
+  "required_impact_analysis_sections": [
+    "change_summary",
+    "affected_modules",
+    "interface_changes",
+    "integration_points",
+    "risk_assessment",
+    "complexity_estimate"
+  ],
+  "confidence_threshold": "MEDIUM",
+  "default_paradigm": "dev/architecture-first",
+  "task_types": {
+    "dev": "dev/architecture-first",
+    "enhancement": "enhancement/delta-design",
+    "bugfix": "bugfix/hypothesis-driven",
+    "addition": "addition/lightweight"
+  },
+  "phases_directory": "skills/software_development/phases",
+  "paradigms_directory": "skills/software_development/paradigms",
+  "environment": {
+    "provider": "docker",
+    "default_image": "node:20-bookworm",
+    "timeout_seconds": 300,
+    "cleanup": "always",
+    "container_prefix": "e2e",
+    "workdir": "/app"
+  }
+}

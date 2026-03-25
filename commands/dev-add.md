@@ -1,0 +1,61 @@
+---
+description: "Add a single component — lightweight workflow for well-scoped additions"
+argument-hint: <what to add>
+---
+
+# Software Development — Addition (Lightweight)
+
+You are executing the **lightweight** paradigm for single, well-scoped additions.
+
+## User Request
+
+$ARGUMENTS
+
+## Paradigm: `addition/lightweight`
+
+**Best for**: Single function, component, or endpoint that fits existing architecture unchanged.
+
+Read the full paradigm definition:
+- `${CLAUDE_PLUGIN_ROOT}/skills/auto-dev/paradigms/addition/lightweight.md`
+
+And the shared skill context:
+- `${CLAUDE_PLUGIN_ROOT}/skills/auto-dev/SKILL.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/auto-dev/config/defaults.json`
+
+## Phase Sequence
+
+Execute these phases **in order**. For each phase, read the phase file from `${CLAUDE_PLUGIN_ROOT}/skills/auto-dev/phases/`, execute its instructions, and verify the quality gate before advancing.
+
+1. **validate-requirements** → `phases/validate-requirements.md`
+   - Must confirm the scope is truly small
+   - If 3+ modules affected → **escalate** to `/dev-enhance` (enhancement/delta-design)
+   - If interface changes needed → **escalate** to `/dev-enhance`
+2. **test-plan** → `phases/test-plan.md`
+   - Lightweight — feature-level acceptance criteria only
+   - NOT unit-test level (unit tests generated during implementation)
+3. **implement** → `phases/implement.md`
+   - Read surrounding code first to match existing patterns and conventions
+   - No architecture or impact doc — the existing code is the reference
+   - Generate unit tests on the fly during implementation
+4. **code-review** → `phases/code-review.md`
+   - Review for structural and design quality
+   - Reference principles in `${CLAUDE_PLUGIN_ROOT}/skills/auto-dev/principles/`
+5. **verify** → `phases/verify.md`
+   - Code compiles/builds successfully
+   - Acceptance criteria from test-plan pass
+   - All existing tests still pass
+6. **deliver** → `phases/deliver.md`
+   - Report completion with structured output
+
+## Escalation Rules
+
+If at any point during implementation it becomes clear that:
+- 3+ modules need changes → escalate to `/dev-enhance`
+- Interface changes needed → escalate to `/dev-enhance`
+- The addition reveals a bug → file separately as `/dev-fix`
+
+## Key Rules
+
+- Match existing patterns — read surrounding code before writing
+- Stay small — if scope grows, escalate to the right paradigm
+- Code quality is mandatory — no delivery without passing code-review

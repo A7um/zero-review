@@ -1,0 +1,23 @@
+{
+  "name": "atum-marketplace",
+  "owner": {
+    "name": "system"
+  },
+  "metadata": {
+    "description": "Software engineering discipline and test-driven verification for coding agents",
+    "version": "4.0.0"
+  },
+  "plugins": [
+    {
+      "name": "zero-review",
+      "source": "./",
+      "description": "Software engineering discipline and test-driven verification for coding agents. Produces high-quality code in one go, without human review or intervention.",
+      "version": "4.0.0",
+      "author": {
+        "name": "system"
+      },
+      "keywords": ["software-engineering", "test-driven", "code-quality", "autonomous-coding"],
+      "category": "development"
+    }
+  ]
+}

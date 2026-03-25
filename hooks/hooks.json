@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SubagentStart": [
+      {
+        "matcher": "Bash|general-purpose|Plan",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/inject-dev-skill.sh",
+            "statusMessage": "Injecting software development context..."
+          }
+        ]
+      }
+    ]
+  }
+}
