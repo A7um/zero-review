@@ -13,7 +13,7 @@ It achieves this through structured engineering practice: every task goes throug
 ### From Marketplace
 
 ```bash
-/plugin marketplace add https://github.com/A7um/auto-dev
+/plugin marketplace add https://github.com/A7um/zero-review
 /plugin install zero-review@atum-marketplace
 /reload-plugins
 ```
