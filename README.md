@@ -13,7 +13,7 @@ It achieves this through structured engineering practice: every task goes throug
 ### From Marketplace
 
 ```bash
-/plugin marketplace add https://github.com/A7um/auto-dev
+/plugin marketplace add https://github.com/A7um/zero-review
 /plugin install zero-review@atum-marketplace
 /reload-plugins
 ```
@@ -27,7 +27,7 @@ claude --plugin-dir /path/to/zero-review
 /reload-plugins
 ```
 
-After installation, the slash commands (`/dev`, `/dev-new`, `/dev-fix`, `/dev-enhance`, `/dev-add`) become available, and the SubagentStart hook automatically injects skill context into subagents.
+After installation, the slash commands (`/zero-review:dev`, `/zero-review:dev-new`, `/zero-review:dev-fix`, `/zero-review:dev-enhance`, `/zero-review:dev-add`) become available, and the SubagentStart hook automatically injects skill context into subagents.
 
 ## Capabilities
 
@@ -45,11 +45,11 @@ After installation, the slash commands (`/dev`, `/dev-new`, `/dev-fix`, `/dev-en
 
 | Command | Paradigm | When to Use |
 |---------|----------|-------------|
-| `/dev <task>` | Auto-classify | Let the agent pick the right paradigm |
-| `/dev-new <task>` | `dev/architecture-first` | Greenfield — new project or system |
-| `/dev-enhance <task>` | `enhancement/delta-design` | Feature addition, behavior extension |
-| `/dev-fix <task>` | `bugfix/hypothesis-driven` | Defect, regression, incorrect behavior |
-| `/dev-add <task>` | `addition/lightweight` | Single function/component, fits existing architecture |
+| `/zero-review:dev <task>` | Auto-classify | Let the agent pick the right paradigm |
+| `/zero-review:dev-new <task>` | `dev/architecture-first` | Greenfield — new project or system |
+| `/zero-review:dev-enhance <task>` | `enhancement/delta-design` | Feature addition, behavior extension |
+| `/zero-review:dev-fix <task>` | `bugfix/hypothesis-driven` | Defect, regression, incorrect behavior |
+| `/zero-review:dev-add <task>` | `addition/lightweight` | Single function/component, fits existing architecture |
 
 ## Plugin Structure
 
@@ -57,11 +57,11 @@ After installation, the slash commands (`/dev`, `/dev-new`, `/dev-fix`, `/dev-en
 plugins/zero-review/
 ├── .claude-plugin/plugin.json     # Plugin metadata
 ├── commands/                      # Slash command definitions
-│   ├── dev.md                     #   /dev — auto-classify
-│   ├── dev-new.md                 #   /dev-new — greenfield
-│   ├── dev-enhance.md             #   /dev-enhance — enhancement
-│   ├── dev-fix.md                 #   /dev-fix — bugfix
-│   └── dev-add.md                 #   /dev-add — addition
+│   ├── dev.md                     #   /zero-review:dev — auto-classify
+│   ├── dev-new.md                 #   /zero-review:dev-new — greenfield
+│   ├── dev-enhance.md             #   /zero-review:dev-enhance — enhancement
+│   ├── dev-fix.md                 #   /zero-review:dev-fix — bugfix
+│   └── dev-add.md                 #   /zero-review:dev-add — addition
 ├── hooks/hooks.json               # SubagentStart hook — injects skill context
 ├── scripts/inject-dev-skill.sh    # Hook script — skill awareness for subagents
 └── skills/auto-dev/              # The skill (auto-dev)
@@ -83,7 +83,7 @@ plugins/zero-review/
 
 ## How It Works
 
-**For the user:** Type `/dev fix the login timeout bug` or just describe the task. The plugin classifies it, loads the right paradigm, and the agent follows the phase sequence autonomously.
+**For the user:** Type `/zero-review:dev fix the login timeout bug` or just describe the task. The plugin classifies it, loads the right paradigm, and the agent follows the phase sequence autonomously.
 
 ## Design Principles
 
