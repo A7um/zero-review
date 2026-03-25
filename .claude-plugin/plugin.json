@@ -1,6 +1,6 @@
 {
   "name": "zero-review",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Software engineering discipline and test-driven verification for coding agents. Produces high-quality code in one go, without human review or intervention.",
   "author": {
     "name": "system"
