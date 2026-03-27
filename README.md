@@ -4,8 +4,6 @@ This plugin uses **software engineering discipline and test-driven verification*
 
 It achieves this through structured engineering practice: every task goes through a mandatory design-thinking phase (architecture for greenfield, impact analysis for enhancements, hypothesis-driven diagnosis for bugs) before any code is written. This forces the agent to understand the problem deeply enough to get it right the first time. Then, test-plan-driven development (TPDD) defines what "correct" means *before* implementation — Must Have checkpoints, integration boundaries, and Forbidden Zone redlines give the agent concrete, verifiable success criteria it can check autonomously. Quality gates at every phase boundary replace the human reviewer: the agent self-assesses against objective criteria, and escalates only when something doesn't fit. The result is code that passes its own review — designed, implemented, reviewed, and verified — delivered without the human ever needing to read a line.
 
-> **Skill design philosophy:** Skill = Agent Strategy Philosophy + Minimum Complete Toolset + Necessary Factual Statements. See [SKILL.md](./skills/auto-dev/SKILL.md) for the full design.
-
 ---
 
 ## Installation
