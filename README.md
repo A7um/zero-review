@@ -8,17 +8,53 @@ It achieves this through structured engineering practice: every task goes throug
 
 ## Installation
 
-### From Marketplace
+This plugin works on **Claude Code, CodeBuddy, OpenClaw, Codex CLI, and Gemini CLI** from a single repository.
 
-```bash
+### Claude Code
+
+```
 /plugin marketplace add https://github.com/A7um/zero-review
 /plugin install zero-review@atum-marketplace
 /reload-plugins
 ```
 
+### CodeBuddy
+
+```
+/plugin marketplace add https://github.com/A7um/zero-review
+/plugin install zero-review@atum-marketplace
+/reload-plugins
+```
+
+### OpenClaw
+
+OpenClaw reads Claude-compatible plugin bundles natively:
+
+```bash
+openclaw plugins install https://github.com/A7um/zero-review
+```
+
+### Codex CLI
+
+Clone the repo into your project — Codex auto-discovers `.agents/skills/`:
+
+```bash
+git clone https://github.com/A7um/zero-review.git
+```
+
+Then invoke the skill with `$zero-review` in Codex.
+
+### Gemini CLI
+
+```bash
+gemini extensions install https://github.com/A7um/zero-review
+```
+
+Commands become available as `/zero-review:dev`, `/zero-review:dev-new`, etc.
+
 ### Local Development
 
-To test the plugin locally during development:
+To test the plugin locally:
 
 ```bash
 claude --plugin-dir /path/to/zero-review
@@ -52,31 +88,32 @@ After installation, the slash commands (`/zero-review:dev`, `/zero-review:dev-ne
 ## Plugin Structure
 
 ```
-plugins/zero-review/
-├── .claude-plugin/plugin.json     # Plugin metadata
-├── commands/                      # Slash command definitions
-│   ├── dev.md                     #   /zero-review:dev — auto-classify
-│   ├── dev-new.md                 #   /zero-review:dev-new — greenfield
-│   ├── dev-enhance.md             #   /zero-review:dev-enhance — enhancement
-│   ├── dev-fix.md                 #   /zero-review:dev-fix — bugfix
-│   └── dev-add.md                 #   /zero-review:dev-add — addition
-├── hooks/hooks.json               # SubagentStart hook — injects skill context
-├── scripts/inject-dev-skill.sh    # Hook script — skill awareness for subagents
-└── skills/auto-dev/              # The skill (auto-dev)
-    ├── SKILL.md                   # Entry point — philosophy, classification, paradigms, traps
-    ├── phases/                    # 11 reusable workflow steps + template
-    ├── paradigms/                 # 4 task-type workflows + parallel-execution protocol
-    │   ├── dev/                   #   architecture-first
-    │   ├── enhancement/           #   delta-design
-    │   ├── bugfix/                #   hypothesis-driven
-    │   └── addition/              #   lightweight
-    ├── principles/                # 8 design principles (module-depth, cohesion, etc.)
-    ├── references/                # Lazy-loaded resources
-    │   └── project-patterns/      #   Per-project experience (dynamic, gitignored)
-    ├── scripts/match-project.sh   # Project experience matcher
-    ├── config/defaults.json       # Configuration
-    ├── examples/                  # Output format references
-    └── CONTRIBUTING.md            # How to extend: add paradigms, compose workflows
+zero-review/
+├── .claude-plugin/               # Claude Code + OpenClaw (bundle mode)
+├── .codebuddy-plugin/            # CodeBuddy
+├── .agents/skills/zero-review/   # Codex CLI (thin wrapper → skills/auto-dev/)
+├── .gemini/commands/zero-review/ # Gemini CLI (TOML commands)
+├── commands/                     # Slash commands (Claude + CodeBuddy)
+│   ├── dev.md                    #   /zero-review:dev — auto-classify
+│   ├── dev-new.md                #   /zero-review:dev-new — greenfield
+│   ├── dev-enhance.md            #   /zero-review:dev-enhance — enhancement
+│   ├── dev-fix.md                #   /zero-review:dev-fix — bugfix
+│   └── dev-add.md                #   /zero-review:dev-add — addition
+├── hooks/hooks.json              # SubagentStart hook
+├── scripts/inject-dev-skill.sh   # Hook script
+└── skills/auto-dev/              # Canonical skill (shared by all platforms)
+    ├── SKILL.md                  # Entry point — philosophy, classification, traps
+    ├── phases/                   # 11 reusable workflow steps + template
+    ├── paradigms/                # 4 task-type workflows + parallel protocol
+    │   ├── dev/                  #   architecture-first
+    │   ├── enhancement/          #   delta-design
+    │   ├── bugfix/               #   hypothesis-driven
+    │   └── addition/             #   lightweight
+    ├── principles/               # 8 design principles
+    ├── references/               # Per-project experience (dynamic, gitignored)
+    ├── config/defaults.json      # Configuration
+    ├── examples/                 # Output format references
+    └── CONTRIBUTING.md           # How to extend
 ```
 
 ## How It Works
