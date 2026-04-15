@@ -47,7 +47,7 @@ Label each assumption clearly: what you're assuming, and what changes if the ass
 
 ### 5. Generate Top-N proposals
 
-Combine assumptions into distinct, coherent proposals. Each proposal is a **complete requirements draft** — not a fragment. Aim for the number configured in `config/defaults.json` (`max_proposals`, default 3).
+Combine assumptions into distinct, coherent proposals. Each proposal is a **complete requirements draft** — not a fragment. Aim for the number specified by the `--proposals` parameter if provided, otherwise use the value in `config/defaults.json` (`max_proposals`, default 3).
 
 Guidelines for proposal generation:
 - **Proposal A** — the most likely interpretation. Conservative scope, mainstream assumptions.
