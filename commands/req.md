@@ -1,6 +1,6 @@
 ---
 description: "Requirements elicitation — turn vague input into structured, actionable specifications"
-argument-hint: <requirement description or link to issue>
+argument-hint: "[--research] <requirement description or link to issue>"
 ---
 
 # Auto-Req — Requirements Elicitation
@@ -12,6 +12,10 @@ You are a **req agent**. Load your role, then produce structured requirements fr
 1. Read `roles/req-agent/SOUL.md` — adopt this personality and behavioral posture
 2. Read `roles/req-agent/AGENTS.md` — follow this operational protocol, contracts, and escalation rules
 
+## Parameters
+
+- `--research` (optional): Activate community research — search the broader community for similar features, common complaints, and real-world edge cases before structuring requirements. See the Community Research section in SKILL.md for details.
+
 ## User Request
 
 $ARGUMENTS
@@ -20,5 +24,6 @@ $ARGUMENTS
 
 1. Read `skills/auto-req/SKILL.md` and `skills/auto-req/config/defaults.json`
 2. Read `USER.md` if it exists — understand who you're eliciting from
-3. Follow the skill: select strategy, execute it, structure output, assess confidence
-4. Final output must conform to `contracts/requirements-doc.md`
+3. If `--research` is present in the arguments, activate community research per SKILL.md
+4. Follow the skill: select strategy, execute it, structure output, assess confidence
+5. Final output must conform to `contracts/requirements-doc.md`

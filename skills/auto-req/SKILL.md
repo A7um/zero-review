@@ -1,6 +1,6 @@
 ---
 name: auto-req
-version: 1.0
+version: 1.1
 description: Requirements elicitation skill. Turns vague human intent into structured, actionable specifications that downstream skills can consume.
 author: system
 requires: []
@@ -28,11 +28,37 @@ requires: []
 
 | Starting material | Strategy |
 |---|---|
-| Vague or conversational request ("make it better", "I need a feature for X") | `strategies/elicit-from-vague.md` |
+| Vague or conversational request, sponsor available for back-and-forth | `strategies/elicit-from-vague.md` |
+| Vague or conversational request, prefer minimal interaction | `strategies/propose-from-assumptions.md` |
 | Existing written spec, PRD, or detailed description that needs sharpening | `strategies/refine-existing.md` |
 | GitHub issue, bug report, or user feedback that needs requirements extraction | `strategies/extract-from-issue.md` |
 
-Read the selected strategy when starting work. If the starting material doesn't fit any category, default to `elicit-from-vague`.
+Read the selected strategy when starting work. If the starting material doesn't fit any category, default to `propose-from-assumptions` — it produces actionable output with the fewest sponsor round-trips.
+
+### Choosing between `elicit-from-vague` and `propose-from-assumptions`
+
+Both handle vague input. The difference is the interaction model:
+
+- **`elicit-from-vague`** pulls information from the sponsor through questions. Best when the sponsor has strong opinions and wants to shape the spec interactively.
+- **`propose-from-assumptions`** pushes proposals to the sponsor for selection. Best when the sponsor gave a brief request and wants to see options rather than answer questions. Uses the agent's own knowledge and (optionally) community research to generate informed proposals.
+
+When in doubt, prefer `propose-from-assumptions` — it's lower friction for the sponsor.
+
+## Community Research (--research)
+
+When the `--research` flag is passed with the command, research the broader open-source community for similar features, common complaints, real-world edge cases, and established patterns before structuring requirements. This grounds the requirements in how real users across many projects experience the problem — not just what the sponsor thought to mention.
+
+**What to research:**
+- How other projects implemented similar features — what worked, what users complained about
+- Common edge cases and failure modes that real users surfaced
+- Acceptance criteria that real users cared about (accessibility, performance thresholds, platform quirks)
+- Non-obvious scope boundaries that projects learned the hard way
+
+**Tools:** Use the best available tools — web search, browsing, or any accessible data source. If the user specifies a particular tool for community access (e.g. a CLI, an API, a search service), use that tool and follow the user's setup instructions. Otherwise, choose the most effective tool available to you on your own.
+
+**How to apply findings:** Community research enriches — it doesn't override. Findings inform better goals, surface edge cases the sponsor didn't mention, and produce more realistic acceptance criteria. Always attribute community-sourced insights in the requirements doc (e.g. "common complaint in similar implementations: ..."). Do not silently inflate scope — if research suggests additional goals beyond what the sponsor asked for, present them as recommendations, clearly separated from the sponsor's original intent.
+
+This step is available to any strategy. It is most valuable with `propose-from-assumptions` (where it sharpens the assumption space) and `refine-existing` (where it validates the spec against real-world expectations).
 
 ## Confidence Assessment
 
@@ -64,7 +90,10 @@ The final output follows `contracts/requirements-doc.md`. Every field in that co
 
 | Resource | When to Load |
 |---|---|
-| `strategies/{strategy}.md` | After determining starting material type |
+| `strategies/elicit-from-vague.md` | Vague input, interactive sponsor |
+| `strategies/propose-from-assumptions.md` | Vague input, minimal interaction preferred |
+| `strategies/refine-existing.md` | Existing spec needs sharpening |
+| `strategies/extract-from-issue.md` | Issue or feedback needs requirements extraction |
 | `templates/requirements-doc.md` | When structuring final output |
 | `templates/usage-scenarios.md` | When writing scenarios for auto-test consumption |
 | `contracts/requirements-doc.md` | For the authoritative output schema |
