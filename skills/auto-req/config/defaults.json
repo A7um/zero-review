@@ -1,9 +1,11 @@
 {
   "confidence_threshold": "MEDIUM",
   "max_clarification_rounds": 3,
-  "default_strategy": "elicit-from-vague",
+  "max_proposals": 3,
+  "default_strategy": "propose-from-assumptions",
   "strategy_selection": {
-    "vague_input": "elicit-from-vague",
+    "vague_input_interactive": "elicit-from-vague",
+    "vague_input": "propose-from-assumptions",
     "existing_spec": "refine-existing",
     "issue_or_feedback": "extract-from-issue"
   }
