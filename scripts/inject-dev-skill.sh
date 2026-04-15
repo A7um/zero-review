@@ -11,7 +11,7 @@ fi
 
 cat <<EOF
 {
-  "systemMessage": "Auto-Dev Skill available (zero-review plugin). When the task involves building, modifying, or fixing software, follow the workflow in the auto-dev skill. Classify: greenfield → /dev-new, bugfix → /dev-fix, enhancement → /dev-enhance, small addition → /dev-add. Or use /dev to auto-classify."
+  "systemMessage": "Auto-Dev Platform available (zero-review plugin). Skills: auto-dev (build/fix software), auto-req (elicit requirements), auto-test (simulated user testing), auto-triage (issue classification and dispatch). Roles: dev-agent, user-agent, triage-agent — see roles/ for SOUL.md and AGENTS.md. Contracts in contracts/ define cross-skill interfaces. Commands: /dev, /dev-new, /dev-fix, /dev-enhance, /dev-add, /req, /test, /triage."
 }
 EOF
 

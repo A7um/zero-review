@@ -9,52 +9,11 @@ You are executing the **lightweight** paradigm for single, well-scoped additions
 
 {{args}}
 
-## Paradigm: `addition/lightweight`
+## Execute
 
-**Best for**: Single function, component, or endpoint that fits existing architecture unchanged.
-
-Read the full paradigm definition:
-- `skills/auto-dev/paradigms/addition/lightweight.md`
-
-And the shared skill context:
-- `skills/auto-dev/SKILL.md`
-- `skills/auto-dev/config/defaults.json`
-
-## Phase Sequence
-
-Execute these phases **in order**. For each phase, read the phase file from `skills/auto-dev/phases/`, execute its instructions, and verify the quality gate before advancing.
-
-1. **validate-requirements** → `phases/validate-requirements.md`
-   - Must confirm the scope is truly small
-   - If 3+ modules affected → **escalate** to `/zero-review:dev-enhance` (enhancement/delta-design)
-   - If interface changes needed → **escalate** to `/zero-review:dev-enhance`
-2. **test-plan** → `phases/test-plan.md`
-   - Lightweight — feature-level acceptance criteria only
-   - NOT unit-test level (unit tests generated during implementation)
-3. **implement** → `phases/implement.md`
-   - Read surrounding code first to match existing patterns and conventions
-   - No architecture or impact doc — the existing code is the reference
-   - Generate unit tests on the fly during implementation
-4. **code-review** → `phases/code-review.md`
-   - Review for structural and design quality
-   - Reference principles in `skills/auto-dev/principles/`
-5. **verify** → `phases/verify.md`
-   - Code compiles/builds successfully
-   - Acceptance criteria from test-plan pass
-   - All existing tests still pass
-6. **deliver** → `phases/deliver.md`
-   - Report completion with structured output
-
-## Escalation Rules
-
-If at any point during implementation it becomes clear that:
-- 3+ modules need changes → escalate to `/zero-review:dev-enhance`
-- Interface changes needed → escalate to `/zero-review:dev-enhance`
-- The addition reveals a bug → file separately as `/zero-review:dev-fix`
-
-## Key Rules
-
-- Match existing patterns — read surrounding code before writing
-- Stay small — if scope grows, escalate to the right paradigm
-- Code quality is mandatory — no delivery without passing code-review
+1. Read `skills/auto-dev/SKILL.md` and `skills/auto-dev/config/defaults.json`
+2. Read the paradigm: `skills/auto-dev/paradigms/addition/lightweight.md`
+3. Follow the paradigm's phase sequence — read each phase file when entering it, not all upfront
+4. Respect quality gates at every phase boundary
+5. If scope grows beyond a single component, escalate to `/zero-review:dev-enhance`
 """

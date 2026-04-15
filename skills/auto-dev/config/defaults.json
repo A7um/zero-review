@@ -1,7 +1,4 @@
 {
-  "output_root": ".dev-output",
-  "designs_directory": "{output_root}/designs",
-  "implementations_directory": "{output_root}/implementations",
   "complexity_levels": ["S", "M", "L", "XL"],
   "required_architecture_sections": [
     "component_breakdown",

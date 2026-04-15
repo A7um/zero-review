@@ -1,0 +1,10 @@
+{
+  "confidence_threshold": "MEDIUM",
+  "max_clarification_rounds": 3,
+  "default_strategy": "elicit-from-vague",
+  "strategy_selection": {
+    "vague_input": "elicit-from-vague",
+    "existing_spec": "refine-existing",
+    "issue_or_feedback": "extract-from-issue"
+  }
+}
