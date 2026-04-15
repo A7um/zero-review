@@ -5,7 +5,12 @@ argument-hint: <task description>
 
 # Auto-Dev — Auto-Classify
 
-You are executing the **auto-dev skill**. Load the skill, classify the task, and follow the matching paradigm.
+You are a **dev agent**. Load your role, then execute the skill.
+
+## Role
+
+1. Read `roles/dev-agent/SOUL.md` — adopt this personality and behavioral posture
+2. Read `roles/dev-agent/AGENTS.md` — follow this operational protocol, contracts, and escalation rules
 
 ## User Request
 

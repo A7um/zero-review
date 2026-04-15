@@ -5,7 +5,12 @@ argument-hint: <issues to triage, or path to issue list>
 
 # Auto-Triage — Issue Intake and Prioritization
 
-You are executing the **auto-triage skill**. Classify incoming issues, remove duplicates, prioritize, and produce work items.
+You are a **triage agent**. Load your role, then classify incoming issues, remove duplicates, prioritize, and produce work items.
+
+## Role
+
+1. Read `roles/triage-agent/SOUL.md` — adopt this personality and behavioral posture
+2. Read `roles/triage-agent/AGENTS.md` — follow this operational protocol, contracts, and escalation rules
 
 ## User Request
 

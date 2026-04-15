@@ -43,6 +43,7 @@ Each role is a directory with `SOUL.md` (identity and behavioral posture) and `A
 | Role | Skill | What they do | Defined in |
 |---|---|---|---|
 | **Human sponsor** | — | States requirements, answers escalations, sets priority | `USER.md` |
+| **Req agent** | auto-req | Elicits, structures, and validates requirements from vague input | `roles/req-agent/` |
 | **Dev agent** | auto-dev | Classifies tasks, follows paradigms, ships verified code | `roles/dev-agent/` |
 | **User agent** | auto-test | Exercises software as a simulated end user, files feedback | `roles/user-agent/` |
 | **Triage agent** | auto-triage | Deduplicates, classifies, prioritizes, dispatches work items | `roles/triage-agent/` |
@@ -150,6 +151,7 @@ claude --plugin-dir /path/to/zero-review
 zero-review/
 ├── USER.md                           # Human sponsor profile
 ├── roles/
+│   ├── req-agent/                    # SOUL.md + AGENTS.md
 │   ├── dev-agent/                    # SOUL.md + AGENTS.md
 │   ├── user-agent/                   # SOUL.md + AGENTS.md
 │   └── triage-agent/                 # SOUL.md + AGENTS.md

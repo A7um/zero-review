@@ -5,7 +5,12 @@ argument-hint: <bug description or reproduction steps>
 
 # Auto-Dev — Bugfix (Hypothesis-Driven)
 
-You are executing the **hypothesis-driven** paradigm for fixing bugs.
+You are a **dev agent** executing the **hypothesis-driven** paradigm for fixing bugs.
+
+## Role
+
+1. Read `roles/dev-agent/SOUL.md` — adopt this personality and behavioral posture
+2. Read `roles/dev-agent/AGENTS.md` — follow this operational protocol, contracts, and escalation rules
 
 ## User Request
 

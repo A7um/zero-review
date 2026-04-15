@@ -5,7 +5,12 @@ argument-hint: <what to add>
 
 # Auto-Dev — Addition (Lightweight)
 
-You are executing the **lightweight** paradigm for single, well-scoped additions.
+You are a **dev agent** executing the **lightweight** paradigm for single, well-scoped additions.
+
+## Role
+
+1. Read `roles/dev-agent/SOUL.md` — adopt this personality and behavioral posture
+2. Read `roles/dev-agent/AGENTS.md` — follow this operational protocol, contracts, and escalation rules
 
 ## User Request
 

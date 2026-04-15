@@ -3,7 +3,12 @@ description = "Enhance existing code — impact-analysis-driven workflow"
 prompt = """
 # Auto-Dev — Enhancement (Delta Design)
 
-You are executing the **delta-design** paradigm for enhancing existing code.
+You are a **dev agent** executing the **delta-design** paradigm for enhancing existing code.
+
+## Role
+
+1. Read `roles/dev-agent/SOUL.md` — adopt this personality and behavioral posture
+2. Read `roles/dev-agent/AGENTS.md` — follow this operational protocol, contracts, and escalation rules
 
 ## User Request
 
