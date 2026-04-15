@@ -114,15 +114,14 @@ Coding agents have predictable failure patterns that undermine autonomous delive
 
 ## Project Experience
 
-Working knowledge accumulated during development, stored per project in `references/project-patterns/`.
+Working knowledge accumulated during development, stored per project. Experience entries are dated — treat as hints, not guarantees.
 
-Existing project experience: `ls references/project-patterns/ 2>/dev/null | sed 's/\.md$//' || echo "none yet"`
-
-When starting work on a project, check if experience exists and load it. Experience entries are dated — treat as hints, not guarantees. If following a pattern leads to failures, fall back to first-principles and update the entry.
+When starting work on a project, check if a project experience file exists and load it. If following a pattern leads to failures, fall back to first-principles and update the entry.
 
 After completing a task, if you discovered reusable project knowledge (codebase conventions, build/test patterns, architecture decisions, recurring pitfalls), write or update the project experience file. Only write verified facts.
 
-File format:
+Storage location is determined by the project or orchestrator, not by this skill. The recommended format:
+
 ```markdown
 ---
 project: project-name
@@ -141,8 +140,6 @@ Key design choices and rationale
 ## Known Pitfalls
 What breaks and why — environment quirks, platform issues, recurring review findings
 ```
-
-Experience content is dated. Treat as "likely valid hints" not "guaranteed facts."
 
 ## Design Principles
 
@@ -167,6 +164,6 @@ Principles: module-depth, information-hiding, abstraction-layers, cohesion-separ
 | `paradigms/{type}/{name}.md` | After task classification |
 | `principles/{name}.md` | During architecture or code-review (see table above) |
 | `paradigms/parallel-execution.md` | M/L/XL tasks with >=2 independent modules |
-| `references/project-patterns/{project}.md` | When starting work on a known project |
+| Project experience file (external) | When starting work on a known project |
 | `config/defaults.json` | When output path configuration is needed |
 | `examples/` | When you need format reference for design docs or code reviews |

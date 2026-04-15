@@ -4,19 +4,19 @@
     "name": "system"
   },
   "metadata": {
-    "description": "Software engineering discipline and test-driven verification for coding agents",
-    "version": "4.0.1"
+    "description": "Auto-dev platform: structured workflows for dev agents, simulated user testing, requirements elicitation, and issue triage",
+    "version": "5.0.0"
   },
   "plugins": [
     {
       "name": "zero-review",
       "source": "./",
-      "description": "Software engineering discipline and test-driven verification for coding agents. Produces high-quality code in one go, without human review or intervention.",
-      "version": "4.0.1",
+      "description": "Auto-dev platform for agent-majority software teams. Four skills (auto-dev, auto-req, auto-test, auto-triage), three roles (dev-agent, user-agent, triage-agent), and cross-skill contracts. Humans supply requirements and intervene at key decision points; agents handle everything else.",
+      "version": "5.0.0",
       "author": {
         "name": "system"
       },
-      "keywords": ["software-engineering", "test-driven", "code-quality", "autonomous-coding"],
+      "keywords": ["auto-dev", "agent-orchestration", "software-engineering", "multi-agent", "test-driven", "requirements", "triage"],
       "category": "development"
     }
   ]

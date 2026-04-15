@@ -1,0 +1,25 @@
+{
+  "max_steps_per_session": 150,
+  "default_persona": "novice",
+  "healthcheck_timeout_seconds": 60,
+  "healthcheck_retry_interval_seconds": 5,
+  "screenshot_on_state_change": true,
+  "screenshot_on_error": true,
+  "fallback_project_type": "cli",
+  "environment_cleanup": "always",
+  "capability_tiers": {
+    "cli": "stable",
+    "api": "stable",
+    "web_dom": "stable",
+    "web_visual": "experimental",
+    "desktop_electron": "experimental",
+    "desktop_native": "experimental",
+    "persona_simulation": "experimental"
+  },
+  "experimental_model_recommendations": {
+    "web_visual": "Vision-capable: GPT-4o+, Gemini Pro Vision+",
+    "desktop_electron": "Vision + tool-use: GPT-5.4+, Claude with vision",
+    "desktop_native": "Strong vision + tool-use: GPT-5.4+",
+    "persona_simulation": "Strong role-play: GPT-5.4+, Claude Opus+"
+  }
+}

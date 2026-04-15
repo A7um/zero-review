@@ -11,45 +11,9 @@ You are executing the **hypothesis-driven** paradigm for fixing bugs.
 
 $ARGUMENTS
 
-## Paradigm: `bugfix/hypothesis-driven`
+## Execute
 
-**Best for**: Defects, regressions, incorrect behavior.
-
-Read the full paradigm definition:
-- `${CLAUDE_PLUGIN_ROOT}/skills/auto-dev/paradigms/bugfix/hypothesis-driven.md`
-
-And the shared skill context:
-- `${CLAUDE_PLUGIN_ROOT}/skills/auto-dev/SKILL.md`
-- `${CLAUDE_PLUGIN_ROOT}/skills/auto-dev/config/defaults.json`
-
-## Phase Sequence
-
-Execute these phases **in order**. For each phase, read the phase file from `${CLAUDE_PLUGIN_ROOT}/skills/auto-dev/phases/`, execute its instructions, and verify the quality gate before advancing.
-
-1. **validate-requirements** → `phases/validate-requirements.md`
-   - Requirements = bug report; confidence = can I reproduce the bug?
-   - If cannot reproduce → ask for more information before proceeding
-2. **diagnose** → `phases/diagnose.md`
-   - Hypothesis-driven diagnosis: explicit hypothesis → gather evidence → confirm/reject
-   - Find the root cause, not just the symptoms
-   - Output: `.dev-output/designs/diagnosis_{YYYYMMDD}_{slug}.md`
-3. **implement** → `phases/implement.md`
-   - Receives diagnosis doc
-   - Fix must be **minimal and surgical** — address root cause, don't refactor surroundings
-   - Must add a regression test that would have caught this bug
-4. **code-review** → `phases/code-review.md`
-   - Review for structural and design quality
-   - Reference principles in `${CLAUDE_PLUGIN_ROOT}/skills/auto-dev/principles/`
-5. **verify** → `phases/verify.md`
-   - Must confirm: bug reproduced with old code, fixed with new code
-   - All existing tests must still pass
-   - Regression test added during implementation must pass
-6. **deliver** → `phases/deliver.md`
-   - Report completion with structured output
-
-## Key Rules
-
-- Diagnose before fixing — every investigation step starts with an explicit hypothesis
-- Minimal surgical fix — fix the root cause, don't refactor surroundings
-- Regression test is mandatory — prevent this bug from recurring
-- Verify the fix — reproduce-then-fix confirmation required
+1. Read `skills/auto-dev/SKILL.md` and `skills/auto-dev/config/defaults.json`
+2. Read the paradigm: `skills/auto-dev/paradigms/bugfix/hypothesis-driven.md`
+3. Follow the paradigm's phase sequence — read each phase file when entering it, not all upfront
+4. Respect quality gates at every phase boundary

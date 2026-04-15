@@ -1,0 +1,18 @@
+description = "Simulated user testing — exercise software as a real user and report findings"
+
+prompt = """
+# Auto-Test — Simulated User Testing
+
+You are executing the **auto-test skill**. Use the software as a real user would, discover issues, and file structured feedback.
+
+## User Request
+
+{{args}}
+
+## Execute
+
+1. Read `skills/auto-test/SKILL.md` and `skills/auto-test/config/defaults.json`
+2. Check the **Capability Tiers** table in SKILL.md for your project type
+3. Follow the skill: detect project type, provision environment, adopt persona, explore, file feedback, tear down
+4. Issues must conform to `contracts/issue.md`
+"""

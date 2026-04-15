@@ -3,57 +3,17 @@ description = "Composable development workflow — auto-classifies task type and
 prompt = """
 # Auto-Dev — Auto-Classify
 
-You are executing the **auto-dev skill**. Your job is to classify the task and follow the correct paradigm workflow.
+You are executing the **auto-dev skill**. Load the skill, classify the task, and follow the matching paradigm.
 
 ## User Request
 
 {{args}}
 
-## Step 1: Load Skill Definition
+## Execute
 
-Read these files to understand the workflow system:
-- `skills/auto-dev/SKILL.md`
-- `skills/auto-dev/config/defaults.json`
-
-## Step 2: Classify the Task
-
-Determine the task type from the user's request using this decision tree:
-
-| Signal | Paradigm | Command equivalent |
-|--------|----------|--------------------|
-| New project/system, no existing codebase | `dev/architecture-first` | `/zero-review:dev-new` |
-| Defect, regression, incorrect behavior | `bugfix/hypothesis-driven` | `/zero-review:dev-fix` |
-| Single function/component, fits existing architecture unchanged | `addition/lightweight` | `/zero-review:dev-add` |
-| Everything else (feature addition, behavior extension) | `enhancement/delta-design` | `/zero-review:dev-enhance` |
-
-**When in doubt** → `enhancement/delta-design`.
-
-**IMPORTANT**: State your classification and reasoning before proceeding.
-
-## Step 3: Load & Execute the Paradigm
-
-Read the selected paradigm file from `skills/auto-dev/paradigms/{task-type}/`:
-- Greenfield → `paradigms/dev/architecture-first.md`
-- Enhancement → `paradigms/enhancement/delta-design.md`
-- Bugfix → `paradigms/bugfix/hypothesis-driven.md`
-- Addition → `paradigms/addition/lightweight.md`
-
-## Step 4: Execute Phase Sequence
-
-Follow the paradigm's phase sequence. For **each phase**:
-1. Read the phase file from `skills/auto-dev/phases/{phase-name}.md`
-2. Execute its instructions
-3. Verify the quality gate is met before advancing
-
-## Step 5: Reference Design Principles
-
-When making design decisions during architecture, implementation, or code review, read the relevant principles from `skills/auto-dev/principles/`.
-
-## Key Rules
-
-- **Think before build** — always design/analyze before implementing
-- **Unclear requirements are blockers** — if confidence is LOW, ask the user
-- **Code quality is mandatory** — no delivery without passing code-review
-- **Respect quality gates** — each phase defines what must be true before proceeding
-- **Real-environment verification** — E2E tests against real software, not mocks
+1. Read `skills/auto-dev/SKILL.md` and `skills/auto-dev/config/defaults.json`
+2. Classify the task using the Task Classification table in SKILL.md. State your classification and reasoning.
+3. Read the selected paradigm from `skills/auto-dev/paradigms/{task-type}/`
+4. Follow the paradigm's phase sequence — read each phase file when entering it, not all upfront
+5. Respect quality gates at every phase boundary
 """
