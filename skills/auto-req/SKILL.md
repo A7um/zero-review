@@ -33,16 +33,21 @@ requires: []
 | Existing written spec, PRD, or detailed description that needs sharpening | `strategies/refine-existing.md` |
 | GitHub issue, bug report, or user feedback that needs requirements extraction | `strategies/extract-from-issue.md` |
 
-Read the selected strategy when starting work. If the starting material doesn't fit any category, default to `propose-from-assumptions` — it produces actionable output with the fewest sponsor round-trips.
+Read the selected strategy when starting work.
 
-### Choosing between `elicit-from-vague` and `propose-from-assumptions`
+### When the strategy is ambiguous
 
-Both handle vague input. The difference is the interaction model:
+If the input clearly fits one row in the table, select it and proceed. If it's ambiguous — typically vague input where either `elicit-from-vague` or `propose-from-assumptions` could work — **ask the sponsor to choose**. Present the viable strategies with a one-line description:
 
-- **`elicit-from-vague`** pulls information from the sponsor through questions. Best when the sponsor has strong opinions and wants to shape the spec interactively.
-- **`propose-from-assumptions`** pushes proposals to the sponsor for selection. Best when the sponsor gave a brief request and wants to see options rather than answer questions. Uses the agent's own knowledge and (optionally) community research to generate informed proposals.
+> I can approach this two ways:
+>
+> **A. Propose from assumptions** — I'll analyze your request, identify what's uncertain, and generate several complete requirement proposals for you to pick from. Lower effort on your side.
+>
+> **B. Elicit through questions** — I'll ask you targeted questions to build the spec interactively. Best if you have strong opinions about the details.
+>
+> Which do you prefer?
 
-When in doubt, prefer `propose-from-assumptions` — it's lower friction for the sponsor.
+Only ask when the choice genuinely matters. If one strategy is clearly better for the input, just use it.
 
 ## Community Research (--research)
 
