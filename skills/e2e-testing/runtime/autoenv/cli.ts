@@ -1287,7 +1287,9 @@ Deliver the final verdict in /workspace/.autoenv-testing/report.json and /worksp
     }
   } catch {}
 
-  if (agentError && status === "passed") {
+  // Trust a structured report over a trailing agent error when artifacts were
+  // successfully written; otherwise successful runs can surface as failures.
+  if (agentError && status !== "passed") {
     status = "failed";
   }
 

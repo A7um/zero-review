@@ -191,13 +191,17 @@ if [[ -n "${setup_base_image}" ]]; then
   args+=("--setup-base-image" "${setup_base_image}")
 fi
 
-for extra_path in "${extra_paths[@]}"; do
-  args+=("--test-path" "${extra_path}")
-done
+if ((${#extra_paths[@]:-0})); then
+  for extra_path in "${extra_paths[@]}"; do
+    args+=("--test-path" "${extra_path}")
+  done
+fi
 
-for env_var in "${env_vars[@]}"; do
-  args+=("-e" "${env_var}")
-done
+if ((${#env_vars[@]:-0})); then
+  for env_var in "${env_vars[@]}"; do
+    args+=("-e" "${env_var}")
+  done
+fi
 
 args+=("${repo}" "${goal}")
 
