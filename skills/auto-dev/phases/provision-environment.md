@@ -11,6 +11,8 @@ optional: true
 ## Purpose
 Auto-provision a Docker environment so the agent can run E2E tests against a real, running instance of the software. This phase produces an Environment block in the same format as a user-provided environment — downstream phases don't care how the environment was created.
 
+If the plugin's bundled `skills/e2e-testing` runtime is available and a fresh repo-level sandbox is sufficient, you may use that skill instead of manually following this phase. The key requirement is the same: produce real, evidence-backed E2E execution, not simulated verification.
+
 **This phase is only invoked when:**
 - The user has no environment to provide but wants real E2E verification
 - The agent asks "want me to set one up?" and the user agrees
