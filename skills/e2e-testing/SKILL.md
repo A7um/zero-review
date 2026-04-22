@@ -5,7 +5,7 @@ description: Run sandboxed end-to-end verification for a repository in Docker us
 
 # E2E Testing
 
-Use this skill when you need fresh-environment, evidence-backed verification of a concrete user-facing goal. The skill owns the testing heuristics. The shell scripts only prepare deterministic scaffolding such as the output directory and artifact paths.
+Use this skill when you need fresh-environment, evidence-backed verification of a concrete user-facing goal. The skill owns both the testing heuristics and the artifact scaffolding.
 
 ## Operating Rules
 
@@ -13,7 +13,7 @@ Use this skill when you need fresh-environment, evidence-backed verification of 
 2. Read the primary repo's README, package manifest, compose files, and obvious build entrypoints first. Inspect extra codebases only when the goal depends on them.
 3. Prefer the minimal setup path that can actually verify the goal. Do not over-provision the sandbox.
 4. Never claim success without concrete evidence from commands, logs, HTTP responses, screenshots, or artifacts.
-5. Always leave behind final `report.md`, `report.json`, `demo.md`, and `artifacts/command-log.txt` in the prepared output directory.
+5. Always leave behind final `report.md`, `report.json`, `demo.md`, and `artifacts/command-log.txt` in the output directory you create for the run.
 
 ## Verification Heuristics
 
@@ -49,51 +49,50 @@ Use this skill when you need fresh-environment, evidence-backed verification of 
 
 1. Confirm the goal is concrete and user-facing.
 2. Choose `mock` or `prompt` based on whether real credentials are essential.
-3. Initialize the deterministic run scaffolding:
-
-```bash
-${CLAUDE_PLUGIN_ROOT}/skills/e2e-testing/scripts/run-e2e.sh --repo . --goal "Verify the login flow works"
-```
-
-4. Read the emitted `run-context.json` and use the prepared artifact paths.
+3. Create an output directory for the run, usually `.dev-output/e2e/<repo>-<timestamp>/`.
+4. Create these files yourself before or during verification:
+   - `report.md`
+   - `report.json`
+   - `demo.md`
+   - `artifacts/command-log.txt`
 5. Perform the verification yourself in a fresh Docker sandbox, following the heuristics above.
-6. Overwrite the placeholder artifact files with the final evidence-backed results.
+6. Fill those artifacts with the final evidence-backed results.
 7. Summarize the verdict from those artifacts.
 
-Default preparation behavior:
+Default conventions:
 
-- `--repo .` tests the current workspace
-- `--mode mock` records that the run should avoid new credentials
-- output goes to `.dev-output/e2e/<repo>-<timestamp>/`
-- placeholder artifacts and `run-context.json` are created deterministically
+- repo `.` means the current workspace
+- `mock` means avoid new credentials unless they are already available
+- output should usually go under `.dev-output/e2e/<repo>-<timestamp>/`
+- artifact paths should be chosen deterministically and then used consistently throughout the run
 
 Good goal: `"Verify the settings page saves theme changes"`
 Bad goal: `"run tests"`
 
 ## Commands
 
-Prepare a run for the current workspace:
+Use the current workspace:
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/skills/e2e-testing/scripts/run-e2e.sh --repo . --goal "Verify the CLI prints help"
+repo="."
+goal="Verify the CLI prints help"
+output=".dev-output/e2e/$(basename "$PWD")-$(date +%Y%m%d-%H%M%S)"
 ```
 
-Prepare a run with extra local code:
+Use extra local code:
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/skills/e2e-testing/scripts/run-e2e.sh \
-  --repo . \
-  --extra-path ../plugin \
-  --goal "Verify the plugin loads and registers commands"
+repo="."
+extra_paths=(../plugin)
+goal="Verify the plugin loads and registers commands"
 ```
 
-Prepare a run that will require minimal env-var prompting:
+Use minimal env-var prompting:
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/skills/e2e-testing/scripts/run-e2e.sh \
-  --repo . \
-  --mode prompt \
-  --goal "Verify OAuth login completes against the real provider"
+repo="."
+mode="prompt"
+goal="Verify OAuth login completes against the real provider"
 ```
 
 ## Artifacts
@@ -103,15 +102,14 @@ Every completed verification should leave:
 - `report.md`
 - `report.json`
 - `demo.md`
-- `run-context.json`
 - `artifacts/command-log.txt`
 
 Use these as the source of truth for pass/fail status, blockers, and evidence.
 
-## Deterministic Helper Notes
+## Execution Notes
 
-- `scripts/run-e2e.sh` does not perform the verification for you.
-- It validates prerequisites, creates the output directory, and writes placeholder artifacts plus `run-context.json`.
+- There is no required wrapper script.
+- The agent should create the output directory and artifact files directly.
 - Required host tooling: Docker.
 
 ## More Detail

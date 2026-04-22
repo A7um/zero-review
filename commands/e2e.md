@@ -14,16 +14,11 @@ $ARGUMENTS
 ## Steps
 
 1. Read `${CLAUDE_PLUGIN_ROOT}/skills/e2e-testing/SKILL.md`.
-2. If the user did not explicitly name another repo path or URL, use the current workspace as `--repo .`.
-3. Initialize the run context:
-
-```bash
-${CLAUDE_PLUGIN_ROOT}/skills/e2e-testing/scripts/run-e2e.sh --repo . --goal "$ARGUMENTS"
-```
-
-4. Read the emitted `run-context.json` and use its output paths.
+2. If the user did not explicitly name another repo path or URL, use the current workspace as repo `.`.
+3. Create an output directory for the run, usually under `.dev-output/e2e/`.
+4. Create `report.md`, `report.json`, `demo.md`, and `artifacts/command-log.txt` in that directory.
 5. Perform the verification yourself in a fresh Docker sandbox, following the heuristics in `SKILL.md`.
-6. Overwrite `report.md`, `report.json`, and `demo.md`, and append command evidence to `artifacts/command-log.txt`.
+6. Fill those artifact files with the final evidence and verdict.
 7. Return the final verdict, evidence summary, output path, and any blockers.
 
 ## Rules

@@ -2,15 +2,9 @@
 
 ## Skill Contract
 
-This skill is skill-first, not runtime-first.
+This skill is skill-first, not wrapper-first.
 
-Prompt-based testing behavior lives in [SKILL.md](SKILL.md). The script surface under `scripts/` is intentionally limited to deterministic preparation:
-
-- validate basic prerequisites
-- normalize inputs
-- create the output directory
-- scaffold placeholder artifacts
-- emit `run-context.json`
+Prompt-based testing behavior and artifact setup both live in [SKILL.md](SKILL.md). There is no required shell wrapper.
 
 ## Wrapper Flags
 
@@ -27,19 +21,16 @@ Primary flags:
 - `--setup-base-image <image>`: override the sandbox base image
 - `--verbose`: stream runtime progress
 
-The helper does not execute the verification. It prepares the run context that the agent then uses while following the skill instructions.
+Treat these as the run parameters the agent tracks while following the skill. They do not imply a required CLI entrypoint.
 
 ## Output Contract
 
-The deterministic helper creates these files up front:
+The agent should create these files during the run:
 
-- `run-context.json`: normalized inputs and artifact paths
-- `report.json`: placeholder result that must be overwritten by the agent
-- `report.md`: placeholder report that must be overwritten by the agent
-- `demo.md`: placeholder walkthrough that must be overwritten by the agent
-- `artifacts/command-log.txt`: command log file the agent should append to during verification
-
-The agent is responsible for replacing the placeholders with final content.
+- `report.json`: machine-readable result with status, summary, evidence, artifacts, and next steps
+- `report.md`: human-readable report with setup steps, commands, assertions, evidence, and verdict
+- `demo.md`: concise walkthrough of the tested flow
+- `artifacts/command-log.txt`: command history with important output
 
 Final meanings:
 
@@ -91,7 +82,6 @@ Prefer a user-provided environment only when the task depends on an existing lon
 
 Useful paths:
 
-- Deterministic helper: `skills/e2e-testing/scripts/run-e2e.sh`
 - Skill heuristics: `skills/e2e-testing/SKILL.md`
 
-If you expand the helper scripts, keep them deterministic. Any new prompt-based reasoning belongs in `SKILL.md` or another markdown reference loaded by the agent.
+If you add helper scripts later, keep them optional and deterministic. Prompt-based reasoning should stay in `SKILL.md` or another markdown reference loaded by the agent.
