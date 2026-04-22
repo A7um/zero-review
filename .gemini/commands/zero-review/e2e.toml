@@ -13,18 +13,20 @@ You are executing the bundled E2E testing skill.
 
 1. Read `skills/e2e-testing/SKILL.md`
 2. If the user did not explicitly name another repo path or URL, use the current workspace as `--repo .`
-3. Run:
+3. Initialize the run context:
 
 ```bash
 ./skills/e2e-testing/scripts/run-e2e.sh --repo . --goal "{{args}}"
 ```
 
-4. Read `report.md` and `report.json` from the output directory
-5. Return the final verdict, evidence summary, output path, and any blockers
+4. Read the emitted `run-context.json` and use its output paths
+5. Perform the verification yourself in a fresh Docker sandbox, following the heuristics in `skills/e2e-testing/SKILL.md`
+6. Overwrite `report.md`, `report.json`, and `demo.md`, and append command evidence to `artifacts/command-log.txt`
+7. Return the final verdict, evidence summary, output path, and any blockers
 
 ## Rules
 
 - Keep the goal concrete and user-facing
 - If the user already gave a repo path or GitHub URL, pass it through with `--repo`
-- If Docker or runtime prerequisites are missing, report that clearly instead of improvising
+- If Docker prerequisites are missing, report that clearly instead of improvising
 """

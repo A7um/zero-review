@@ -56,7 +56,7 @@ Before running E2E tests, determine the execution environment.
      2. *"I can set one up — I'll run the provision-environment phase or the bundled `skills/e2e-testing` sandbox"*
      3. *"Skip — proceed with local verification only"*
    - If user provides → record in Environment Spec, proceed as path A
-   - If user wants auto-setup → prefer `skills/e2e-testing/scripts/run-e2e.sh` when Docker-based fresh verification is acceptable; otherwise run `provision-environment`, then proceed as path A
+   - If user wants auto-setup → prefer the bundled `skills/e2e-testing` skill and its deterministic helper scripts when Docker-based fresh verification is acceptable; otherwise run `provision-environment`, then proceed as path A
    - If user declines → proceed to Step 4 without environment (local methods only)
 
 ### Step 4: E2E Verification (Level 3)
@@ -76,7 +76,7 @@ For each E2E User Flow in the TestPlan:
 2. **At each step, verify the outcome** — not just the final result. If step 3 of 5 produces wrong output, catch it at step 3.
 3. Record per scenario: name, pass/fail per step, actual vs expected, observations
 
-When the repository can be verified in a fresh Docker sandbox, the bundled `skills/e2e-testing` runtime is an acceptable implementation of this step. It already provisions the environment, runs the scenario, and emits `report.md`, `report.json`, `demo.md`, and command logs.
+When the repository can be verified in a fresh Docker sandbox, the bundled `skills/e2e-testing` skill is an acceptable implementation of this step. The skill owns the testing heuristics, while its helper scripts provide deterministic output scaffolding for `report.md`, `report.json`, `demo.md`, and command logs.
 
 #### Without Environment
 

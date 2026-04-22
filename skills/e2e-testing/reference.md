@@ -1,18 +1,16 @@
 # E2E Testing Reference
 
-## What This Skill Bundles
+## Skill Contract
 
-This skill vendors the `autoenv` testing runtime under `runtime/autoenv/`.
+This skill is skill-first, not runtime-first.
 
-The important behavior migrated from `autoenv` is:
+Prompt-based testing behavior lives in [SKILL.md](SKILL.md). The script surface under `scripts/` is intentionally limited to deterministic preparation:
 
-- fresh Docker sandbox per run
-- autonomous agent-driven verification against a concrete goal
-- optional companion codebases copied into the sandbox
-- optional env-var discovery and prompting for real verification
-- structured report artifacts copied back to the host even on failure
-
-The `setup` side of `autoenv` is kept only as implementation detail in the vendored runtime. The intended public entrypoint for `zero-review` is goal-driven testing.
+- validate basic prerequisites
+- normalize inputs
+- create the output directory
+- scaffold placeholder artifacts
+- emit `run-context.json`
 
 ## Wrapper Flags
 
@@ -29,11 +27,21 @@ Primary flags:
 - `--setup-base-image <image>`: override the sandbox base image
 - `--verbose`: stream runtime progress
 
-Anything after `--` is forwarded to the vendored runtime unchanged.
+The helper does not execute the verification. It prepares the run context that the agent then uses while following the skill instructions.
 
 ## Output Contract
 
-The runtime writes these artifacts:
+The deterministic helper creates these files up front:
+
+- `run-context.json`: normalized inputs and artifact paths
+- `report.json`: placeholder result that must be overwritten by the agent
+- `report.md`: placeholder report that must be overwritten by the agent
+- `demo.md`: placeholder walkthrough that must be overwritten by the agent
+- `artifacts/command-log.txt`: command log file the agent should append to during verification
+
+The agent is responsible for replacing the placeholders with final content.
+
+Final meanings:
 
 - `report.json`: machine-readable status, summary, evidence, artifacts, next steps
 - `report.md`: human-readable report with setup steps, commands, assertions, and verdict
@@ -57,6 +65,17 @@ Write goals from the user's perspective:
 
 When the feature is UI-driven, explicitly mention the observable flow so the runtime can use browser automation or screenshots when needed.
 
+## Heuristic Checklist
+
+Use this checklist while following the skill:
+
+- Start with repo docs and obvious config files before source-level scanning.
+- Pick the minimal viable environment to test the goal.
+- In `mock` mode, avoid asking for new credentials and prefer local doubles.
+- In `prompt` mode, ask for only the minimal env vars required for this goal.
+- Preserve evidence as you go instead of reconstructing it later.
+- End with a concrete verdict, not just raw logs.
+
 ## Integration With Auto-Dev
 
 Use this skill from `auto-dev`'s `verify` phase when:
@@ -72,14 +91,7 @@ Prefer a user-provided environment only when the task depends on an existing lon
 
 Useful paths:
 
-- Wrapper: `skills/e2e-testing/scripts/run-e2e.sh`
-- Binary builder: `skills/e2e-testing/scripts/build-binary.sh`
-- Vendored runtime: `skills/e2e-testing/runtime/autoenv/`
+- Deterministic helper: `skills/e2e-testing/scripts/run-e2e.sh`
+- Skill heuristics: `skills/e2e-testing/SKILL.md`
 
-To attach a binary for the current platform:
-
-```bash
-./skills/e2e-testing/scripts/build-binary.sh
-```
-
-The wrapper auto-detects `darwin-arm64`, `darwin-x64`, `linux-arm64`, and `linux-x64` binaries named `autoenv-<platform>`.
+If you expand the helper scripts, keep them deterministic. Any new prompt-based reasoning belongs in `SKILL.md` or another markdown reference loaded by the agent.

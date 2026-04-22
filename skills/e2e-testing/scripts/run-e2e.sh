@@ -3,8 +3,6 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SKILL_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
-RUNTIME_DIR="${SKILL_ROOT}/runtime/autoenv"
-BIN_DIR="${SKILL_ROOT}/bin"
 
 repo="."
 goal=""
@@ -25,14 +23,14 @@ Usage: run-e2e.sh --goal "<goal>" [options]
 Options:
   --repo <path-or-url>         Repo to test (default: .)
   --goal "<goal>"              Concrete verification request
-  --mode <mock|prompt>         Verification strategy (default: mock)
+  --mode <mock|prompt>         Verification strategy for the agent (default: mock)
   --extra-path <path>          Extra local tree to copy into the sandbox
-  --output <path>              Output directory for artifacts
-  --env KEY=value              Environment variable to inject (repeatable)
-  --timeout <seconds>          Agent time budget
+  --output <path>              Output directory for artifacts and run context
+  --env KEY=value              Environment variable already supplied by the user
+  --timeout <seconds>          Suggested agent time budget
   --tag <tag>                  Branch or tag for remote GitHub repos
-  --setup-base-image <image>   Override sandbox base image
-  --verbose                    Stream runtime progress
+  --setup-base-image <image>   Suggested sandbox base image
+  --verbose                    Emit extra preparation details
 EOF
 }
 
@@ -125,6 +123,42 @@ if ! command -v docker >/dev/null 2>&1; then
   exit 1
 fi
 
+json_escape() {
+  local value="${1:-}"
+  value="${value//\\/\\\\}"
+  value="${value//\"/\\\"}"
+  value="${value//$'\n'/\\n}"
+  value="${value//$'\r'/\\r}"
+  value="${value//$'\t'/\\t}"
+  printf '%s' "${value}"
+}
+
+abspath_if_local() {
+  local candidate="$1"
+  if [[ "${candidate}" =~ ^https?:// ]] || [[ "${candidate}" =~ ^git@ ]]; then
+    printf '%s' "${candidate}"
+    return
+  fi
+
+  if [[ -d "${candidate}" ]]; then
+    (
+      cd "${candidate}"
+      pwd
+    )
+    return
+  fi
+
+  if [[ -e "${candidate}" ]]; then
+    (
+      cd "$(dirname "${candidate}")"
+      printf '%s/%s\n' "$(pwd)" "$(basename "${candidate}")"
+    )
+    return
+  fi
+
+  printf '%s' "${candidate}"
+}
+
 slug_source="${repo}"
 if [[ "${repo}" == "." ]]; then
   slug_source="$(basename "$(pwd)")"
@@ -140,69 +174,105 @@ if [[ -z "${output}" ]]; then
   output="$(pwd)/.dev-output/e2e/${slug}-$(date +%Y%m%d-%H%M%S)"
 fi
 
-uname_s="$(uname -s | tr '[:upper:]' '[:lower:]')"
-uname_m="$(uname -m)"
-case "${uname_m}" in
-  arm64|aarch64) arch="arm64" ;;
-  x86_64|amd64) arch="x64" ;;
-  *)
-    arch="${uname_m}"
-    ;;
-esac
-platform="${uname_s}-${arch}"
-binary_path="${BIN_DIR}/autoenv-${platform}"
-
-if [[ -x "${binary_path}" ]]; then
-  runner=("${binary_path}")
+repo_resolved="$(abspath_if_local "${repo}")"
+if [[ "${repo_resolved}" =~ ^https?:// ]] || [[ "${repo_resolved}" =~ ^git@ ]]; then
+  repo_kind="remote"
 else
-  if ! command -v bun >/dev/null 2>&1; then
-    echo "No bundled binary found for ${platform} and Bun is not installed." >&2
-    echo "Build one with skills/e2e-testing/scripts/build-binary.sh or install Bun." >&2
-    exit 1
-  fi
-
-  if [[ ! -d "${RUNTIME_DIR}/node_modules" ]]; then
-    (
-      cd "${RUNTIME_DIR}"
-      bun install
-    )
-  fi
-
-  runner=(bun "${RUNTIME_DIR}/cli.ts")
+  repo_kind="local"
 fi
 
-args=("test")
+mkdir -p "${output}/artifacts"
+
+report_json="${output}/report.json"
+report_md="${output}/report.md"
+demo_md="${output}/demo.md"
+command_log="${output}/artifacts/command-log.txt"
+run_context="${output}/run-context.json"
+
+: > "${command_log}"
+
+{
+  printf '# E2E Verification Report\n\n'
+  printf 'Status: `pending`\n\n'
+  printf 'Goal: %s\n\n' "${goal}"
+  printf 'The agent should replace this placeholder with the final evidence-backed report.\n'
+} > "${report_md}"
+
+{
+  printf '# Demo\n\n'
+  printf 'Replace this placeholder with the concise verification walkthrough.\n'
+} > "${demo_md}"
+
+{
+  printf '{\n'
+  printf '  "status": "pending",\n'
+  printf '  "summary": "Run prepared. Agent must replace this placeholder with final results.",\n'
+  printf '  "request": {\n'
+  printf '    "goal": "%s",\n' "$(json_escape "${goal}")"
+  printf '    "mode": "%s",\n' "$(json_escape "${mode}")"
+  printf '    "repo": "%s"\n' "$(json_escape "${repo_resolved}")"
+  printf '  },\n'
+  printf '  "artifacts": {\n'
+  printf '    "reportMd": "%s",\n' "$(json_escape "${report_md}")"
+  printf '    "demoMd": "%s",\n' "$(json_escape "${demo_md}")"
+  printf '    "commandLog": "%s"\n' "$(json_escape "${command_log}")"
+  printf '  },\n'
+  printf '  "nextSteps": [\n'
+  printf '    "Read skills/e2e-testing/SKILL.md",\n'
+  printf '    "Run the verification manually in a fresh Docker sandbox",\n'
+  printf '    "Overwrite the placeholder artifacts with final evidence"\n'
+  printf '  ]\n'
+  printf '}\n'
+} > "${report_json}"
+
+{
+  printf '{\n'
+  printf '  "goal": "%s",\n' "$(json_escape "${goal}")"
+  printf '  "mode": "%s",\n' "$(json_escape "${mode}")"
+  printf '  "repo": "%s",\n' "$(json_escape "${repo_resolved}")"
+  printf '  "repoKind": "%s",\n' "$(json_escape "${repo_kind}")"
+  printf '  "outputDir": "%s",\n' "$(json_escape "${output}")"
+  printf '  "reportJson": "%s",\n' "$(json_escape "${report_json}")"
+  printf '  "reportMd": "%s",\n' "$(json_escape "${report_md}")"
+  printf '  "demoMd": "%s",\n' "$(json_escape "${demo_md}")"
+  printf '  "commandLog": "%s",\n' "$(json_escape "${command_log}")"
+  printf '  "tag": "%s",\n' "$(json_escape "${tag}")"
+  printf '  "timeoutSeconds": "%s",\n' "$(json_escape "${timeout}")"
+  printf '  "setupBaseImage": "%s",\n' "$(json_escape "${setup_base_image}")"
+  printf '  "verbose": %s,\n' "$([[ "${verbose}" -eq 1 ]] && printf 'true' || printf 'false')"
+  printf '  "createdAt": "%s",\n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+  printf '  "extraPaths": [\n'
+  for i in "${!extra_paths[@]}"; do
+    resolved_path="$(abspath_if_local "${extra_paths[$i]}")"
+    suffix=","
+    if [[ "$i" -eq "$((${#extra_paths[@]} - 1))" ]]; then
+      suffix=""
+    fi
+    printf '    "%s"%s\n' "$(json_escape "${resolved_path}")" "${suffix}"
+  done
+  printf '  ],\n'
+  printf '  "envVars": [\n'
+  for i in "${!env_vars[@]}"; do
+    suffix=","
+    if [[ "$i" -eq "$((${#env_vars[@]} - 1))" ]]; then
+      suffix=""
+    fi
+    printf '    "%s"%s\n' "$(json_escape "${env_vars[$i]}")" "${suffix}"
+  done
+  printf '  ]\n'
+  printf '}\n'
+} > "${run_context}"
 
 if [[ "${verbose}" -eq 1 ]]; then
-  args+=("--verbose")
+  echo "Prepared run context at ${run_context}" >&2
 fi
 
-args+=("--test-mode" "${mode}" "--test-output" "${output}")
-
-if [[ -n "${timeout}" ]]; then
-  args+=("--test-timeout" "${timeout}")
-fi
-
-if [[ -n "${tag}" ]]; then
-  args+=("--tag" "${tag}")
-fi
-
-if [[ -n "${setup_base_image}" ]]; then
-  args+=("--setup-base-image" "${setup_base_image}")
-fi
-
-if ((${#extra_paths[@]:-0})); then
-  for extra_path in "${extra_paths[@]}"; do
-    args+=("--test-path" "${extra_path}")
-  done
-fi
-
-if ((${#env_vars[@]:-0})); then
-  for env_var in "${env_vars[@]}"; do
-    args+=("-e" "${env_var}")
-  done
-fi
-
-args+=("${repo}" "${goal}")
-
-exec "${runner[@]}" "${args[@]}"
+cat <<EOF
+Prepared e2e run context.
+OUTPUT_DIR=${output}
+RUN_CONTEXT=${run_context}
+REPORT_JSON=${report_json}
+REPORT_MD=${report_md}
+DEMO_MD=${demo_md}
+COMMAND_LOG=${command_log}
+EOF
