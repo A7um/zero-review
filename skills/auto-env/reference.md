@@ -1,4 +1,4 @@
-# Autoenv Reference
+# Auto-env Reference
 
 ## Skill Contract
 
@@ -50,7 +50,7 @@ Write goals as run targets, not broad testing requests:
 - Bad: `run all tests`
 - Bad: `check app`
 
-If the user asks for end-to-end testing, use Autoenv first only when there is no reliable environment yet. The resulting `runInstructions` should feed the downstream E2E verification step.
+If the user asks for end-to-end testing, use Auto-env first only when there is no reliable environment yet. The resulting `runInstructions` should feed the downstream E2E verification step.
 
 ## Heuristic Checklist
 
@@ -79,7 +79,7 @@ Downstream verification should consume `environment.json` and `environment.md` r
 
 Useful paths:
 
-- Skill heuristics: `skills/autoenv/SKILL.md`
-- Reference contract: `skills/autoenv/reference.md`
+- Skill heuristics: `skills/auto-env/SKILL.md`
+- Reference contract: `skills/auto-env/reference.md`
 
 If you add helper scripts later, keep them optional and deterministic. Prompt-based reasoning should stay in `SKILL.md` or another markdown reference loaded by the agent.

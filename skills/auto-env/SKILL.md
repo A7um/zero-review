@@ -1,9 +1,9 @@
 ---
-name: autoenv
+name: auto-env
 description: Configure runnable development environments for repositories using repo inspection, targeted environment-variable discovery, Docker or local setup, and smoke-test evidence. Use this skill whenever the user asks to set up a repo, make a project runnable, configure environment variables, prepare a Docker/dev environment, create a shell/run contract for another agent, or unblock downstream E2E verification.
 ---
 
-# Autoenv
+# Auto-env
 
 Use this skill when you need to turn a repository into a usable development or verification environment. The primary output is an environment contract that tells a human or downstream agent how to run commands in the configured environment. Smoke testing is required evidence that the environment works, but end-to-end product testing is a downstream consumer of this skill rather than the skill's core job.
 
@@ -20,7 +20,7 @@ Use this skill when you need to turn a repository into a usable development or v
 ## Workflow
 
 1. Resolve the target repository. Default `repo` to the current workspace when no path or URL is named.
-2. Create an output directory, usually `.dev-output/autoenv/<repo>-<timestamp>/`, with an `artifacts/` subdirectory.
+2. Create an output directory, usually `.dev-output/auto-env/<repo>-<timestamp>/`, with an `artifacts/` subdirectory.
 3. Inspect setup surfaces in this order:
    - README or setup docs
    - `.env.example`, `.env.sample`, `.env.template`, or similar
@@ -48,7 +48,7 @@ Use this skill when you need to turn a repository into a usable development or v
 
 ## Environment Artifacts
 
-Every completed Autoenv run should leave:
+Every completed Auto-env run should leave:
 
 - `environment.md`
 - `environment.json`
@@ -127,7 +127,7 @@ For Docker-based setup:
 - Keep networking narrow; publish only ports needed for the smoke test or user access.
 - Record cleanup commands, but do not tear down a reusable environment unless the user asked for an ephemeral run.
 
-For a reusable image modeled after the original `autoenv setup` flow:
+For a reusable image modeled after the original `auto-env setup` flow:
 
 1. Copy or mount the repo into `/workspace`.
 2. Install dependencies and build in the container.
@@ -142,7 +142,7 @@ Current workspace:
 ```bash
 repo="."
 goal="Configure this repo so I can run the CLI help"
-output=".dev-output/autoenv/$(basename "$PWD")-$(date +%Y%m%d-%H%M%S)"
+output=".dev-output/auto-env/$(basename "$PWD")-$(date +%Y%m%d-%H%M%S)"
 ```
 
 With injected env:

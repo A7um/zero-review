@@ -1,11 +1,11 @@
 ---
-description: "Configure a runnable development environment for the current repo or a specified repo using the bundled Autoenv skill"
+description: "Configure a runnable development environment for the current repo or a specified repo using the bundled Auto-env skill"
 argument-hint: <environment goal>
 ---
 
-# Autoenv Environment Configuration
+# Auto-env Environment Configuration
 
-You are executing the bundled Autoenv skill.
+You are executing the bundled Auto-env skill.
 
 ## User Request
 
@@ -13,9 +13,9 @@ $ARGUMENTS
 
 ## Steps
 
-1. Read `${CLAUDE_PLUGIN_ROOT}/skills/autoenv/SKILL.md`.
+1. Read `${CLAUDE_PLUGIN_ROOT}/skills/auto-env/SKILL.md`.
 2. If the user did not explicitly name another repo path or URL, use the current workspace as repo `.`.
-3. Create an output directory for the run, usually under `.dev-output/autoenv/`.
+3. Create an output directory for the run, usually under `.dev-output/auto-env/`.
 4. Create `environment.md`, `environment.json`, and `artifacts/command-log.txt` in that directory.
 5. Inspect setup docs, env templates, Docker/compose files, and build manifests before choosing the setup path.
 6. Configure the minimal runnable environment, install dependencies, and run a smoke test.
