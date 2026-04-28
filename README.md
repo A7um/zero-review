@@ -54,7 +54,7 @@ Each role is a directory with `SOUL.md` (identity and behavioral posture) and `A
 
 **auto-test** makes user agents exercise software the way real people do, not the way engineers verify it. It provisions a Docker environment with the right interaction toolkit (Playwright for web, shell for CLI, HTTP client for APIs), assigns the agent a persona with specific goals and patience limits, and runs a perception-action loop — observe the screen, decide what to do, act, record what happened. Friction is signal: confusion, slowness, missing affordances, and broken flows all become structured bug reports and feature requests that a dev agent can act on without asking for clarification. The persona system prevents the agent from over-testing: a novice gives up when confused, a power user pushes through, an adversarial tester probes boundaries.
 
-**e2e-testing** gives agents a fresh Docker sandbox for repo-level end-to-end verification when they need evidence from a real running environment instead of local-only checks. The skill itself encodes the goal-selection, env-discovery, mock-vs-prompt, evidence rules, and artifact scaffolding. The result is the same structured artifact set (`report.md`, `report.json`, `demo.md`, command logs), without hiding a second prompt system behind a helper runtime.
+**autoenv** configures runnable development environments for repositories. It inspects setup docs, env templates, Docker/compose files, and build manifests; discovers required and optional environment variables; chooses a minimal Docker or local setup path; installs dependencies; and records the run/shell contract in `environment.md`, `environment.json`, and command logs. Downstream E2E verification consumes that environment instead of rediscovering setup from scratch.
 
 **auto-triage** turns a pile of incoming issues into a prioritized, deduplicated queue of self-contained work items. It classifies each issue by type (bug, enhancement, addition) and maps it to the right dev paradigm, assigns priority based on user impact with a stated rationale, merges duplicates so dev agents don't do the same work twice, and dispatches work items complete enough that a dev agent can start immediately. Business priority calls (P0/P1) escalate to the human sponsor — the triage agent suggests, it doesn't decide unilaterally.
 
@@ -96,7 +96,7 @@ Not all testing modes are equally reliable. auto-test explicitly marks each capa
 | `/zero-review:dev-enhance <task>` | auto-dev | Feature addition, behavior extension |
 | `/zero-review:dev-fix <task>` | auto-dev | Defect, regression, incorrect behavior |
 | `/zero-review:dev-add <task>` | auto-dev | Single function/component |
-| `/zero-review:e2e <goal>` | e2e-testing | Sandboxed end-to-end verification |
+| `/zero-review:autoenv <goal>` | autoenv | Configure a runnable environment |
 | `/zero-review:req <input>` | auto-req | Elicit and structure requirements |
 | `/zero-review:test <artifact>` | auto-test | Simulated user testing |
 | `/zero-review:triage <issues>` | auto-triage | Classify and dispatch issues |
@@ -162,11 +162,11 @@ zero-review/
 │   ├── auto-dev/                     # Software engineering (phases, paradigms, principles)
 │   ├── auto-req/                     # Requirements elicitation (strategies, templates)
 │   ├── auto-test/                    # Simulated user testing (interaction, personas, environments)
-│   ├── e2e-testing/                  # Sandboxed repo-level E2E verification
+│   ├── autoenv/                      # Environment configuration and run contract
 │   └── auto-triage/                  # Issue triage (rules, templates)
 ├── contracts/                        # Cross-skill interface definitions
 ├── commands/                         # Slash commands (Claude + CodeBuddy)
-│   ├── e2e.md                        # Sandboxed E2E verification command
+│   ├── autoenv.md                    # Environment configuration command
 ├── .gemini/commands/zero-review/     # Gemini CLI commands
 ├── .cursor-plugin/                   # Cursor metadata
 ├── .claude-plugin/                   # Claude Code + OpenClaw metadata
