@@ -1,7 +1,7 @@
 {
   "name": "zero-review",
   "version": "5.0.0",
-  "description": "Auto-dev platform for agent-majority software teams. Four skills (auto-dev, auto-req, auto-test, auto-triage), three roles (dev-agent, user-agent, triage-agent), and cross-skill contracts. Humans supply requirements and intervene at key decision points; agents handle everything else.",
+  "description": "Auto-dev platform for agent-majority software teams. Five skills (auto-dev, auto-env, auto-req, auto-test, auto-triage), four roles (dev-agent, req-agent, user-agent, triage-agent), and cross-skill contracts. Humans supply requirements and intervene at key decision points; agents handle everything else.",
   "author": {
     "name": "system"
   }
