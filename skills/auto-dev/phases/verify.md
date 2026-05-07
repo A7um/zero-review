@@ -53,10 +53,10 @@ Before running E2E tests, determine the execution environment.
 **B) No environment available:**
    - Ask the user: *"A real environment would enable full E2E testing. Options:"*
      1. *"Provide one — give me a way to run commands (docker exec, SSH, local shell)"*
-     2. *"I can set one up — I'll run the provision-environment phase"*
+     2. *"I can set one up — I'll run the provision-environment phase or the bundled `skills/auto-env` skill"*
      3. *"Skip — proceed with local verification only"*
    - If user provides → record in Environment Spec, proceed as path A
-   - If user wants auto-setup → run `provision-environment` phase, proceed as path A
+   - If user wants auto-setup → prefer the bundled `skills/auto-env` skill when it can produce the needed run contract; otherwise run `provision-environment`, then proceed as path A
    - If user declines → proceed to Step 4 without environment (local methods only)
 
 ### Step 4: E2E Verification (Level 3)
@@ -75,6 +75,8 @@ For each E2E User Flow in the TestPlan:
 1. Execute the full user journey inside the environment via the exec command
 2. **At each step, verify the outcome** — not just the final result. If step 3 of 5 produces wrong output, catch it at step 3.
 3. Record per scenario: name, pass/fail per step, actual vs expected, observations
+
+When the repository needs environment setup before E2E verification, consume the bundled `skills/auto-env` outputs first. Its `environment.json` and `environment.md` define the exec command, workdir, ports, env vars, and smoke-test evidence that this step should use for the real E2E scenarios.
 
 #### Without Environment
 
